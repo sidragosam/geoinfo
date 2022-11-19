@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<title>Ignéczi Tibor - Beadandó</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="index.css">
+<script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin=""></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ==" crossorigin=""/>
+<script src="./L.KML.js"></script>
+<style>
+		html, body {
+			height: 100%;
+			margin: 0;
+		}
+		.leaflet-container {
+			height: 400px;
+			width: 1500px;
+			max-width: 100%;
+			max-height: 100%;
+		}
+	</style>
+
+</head>
+<body>
+
+<!-- Navbar (sit on top) -->
+<div class="w3-top">
+  <div class="w3-bar w3-white w3-wide w3-padding w3-card">
+    <a href="#home" class="w3-bar-item w3-button"><b>Beadandó</b> Ignéczi Tibor</a>
+    <!-- Float links to the right. Hide them on small screens -->
+    <div class="w3-right w3-hide-small">
+      <a href="#terkep" class="w3-bar-item w3-button">Térkép</a>
+      <a href="#doc" class="w3-bar-item w3-button">Dokumentáció</a>
+    </div>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="w3-display-container w3-content w3-wide" style="max-width:1500px;" id="home">
+  <img class="w3-image" src="imgs/header.JPEG" alt="Split" width="1500" height="800">
+  <div class="w3-display-middle w3-margin-top w3-center">
+    <h1 class="w3-xxlarge w3-text-white"><span class="w3-padding w3-black w3-opacity-min"><b>Ignéczi Tibor</b></span><br/> <span class="w3-hide-small w3-text-light-grey">Beadandó</span></h1>
+  </div>
+</header>
+
+<style>
+.custom-popup .leaflet-popup-content-wrapper {
+  background:#2c3e50;
+  color:#eeeeee;
+  font-size:12px;
+  line-height:24px;
+  }
+.custom-popup .leaflet-popup-content-wrapper a {
+  color:rgba(255,255,255,0.5);
+  }
+.custom-popup .leaflet-popup-tip-container {
+  width:30px;
+  height:15px;
+  }
+.custom-popup .leaflet-tooltip{
+  background:#2c3e50;
+  color:#eeeeee;
+  font-size:12px;
+  line-height:24px;
+}
+</style>
+
+<!-- Page content -->
+<div class="w3-content w3-padding" style="max-width:1564px">
+
+  <!-- Project Section -->
+  <div class="w3-container w3-padding-32" id="terkep">
+    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Térkép</h3>
+  </div>
+  <div class='custom-popup' id="map" style="width: 1500px; height: 400px;"></div>
+	<script>
+	
+	
+	var BeachIcon = L.Icon.extend({ 
+		options: { 
+			iconUrl: 'imgs/beach.png',
+			iconSize: [38, 38], 
+			//shadowSize: [50, 64],
+			iconAnchor: [22, 38], 
+			//shadowAnchor: [4, 62], 
+			popupAnchor: [-3, -38] 
+		} 
+	});
+	
+	var beachIcon = new BeachIcon();
+	var marker1 = L.marker([43.51472618156593,16.41409772012427], {icon: beachIcon}).bindPopup('<b>Prva Voda Beach</b><br/>A szállásunkhoz a legközelebb megtalálható strand.'), 
+    marker2 = L.marker([43.50061246132454, 16.45428489334279], {icon: beachIcon}).bindPopup('<b>Firule Beach</b><br/>Kavicsos tengerpart.'), 
+    marker3 = L.marker([43.50049353472176, 16.45083995536731], {icon: beachIcon}).bindPopup('<b>Little Sheeps Beach</b><br/>Apró kavicsos nagyon gyönyörű tengerpart.'), 
+    marker4 = L.marker([43.5023993373887, 16.44704747288873], {icon: beachIcon}).bindPopup('<b>Bačvice Beach</b><br/>Homokos tengarpart.');
+	marker5 = L.marker([43.51447728358619, 16.40681538645698], {icon: beachIcon}).bindPopup('<b>Lubinski Porat Beach</b><br/>Egy kis öbölben lévő part, kristálytiszta vízzel, kövekkel.');
+	
+	var beaches = L.layerGroup([marker1, marker2, marker3, marker4, marker5]);
+	
+	var NewIcon = L.Icon.extend({ 
+		options: { 
+			iconUrl: 'imgs/marker.png',
+			iconSize: [38, 38], 
+			//shadowSize: [50, 64],
+			iconAnchor: [22, 38], 
+			//shadowAnchor: [4, 62], 
+			popupAnchor: [-3, -38] 
+		} 
+	});
+	
+	var newIcon = new NewIcon();
+	cmarker1 = L.marker([43.51454166666667, 16.435925], {icon: newIcon}).bindPopup('<b>Split</b><br/>Horvátország második legnagyobb városa. Dalmácia legnagyobb városa.');
+	cmarker2 = L.marker([43.80498741109021, 15.96288800577575], {icon: newIcon}).bindPopup('<b>Krka</b><br/>Krka Nemzeti Park. Számos szikla, vízesés, valamint az itteni különleges állat- és növényvilág érdemes a figyelemre.');
+	cmarker3 = L.marker([43.55984667866608, 16.5222079647549], {icon: newIcon}).bindPopup('<b>Klis</b><br/>Klissza falu, legnagyobb nevezetessége az itt található vár.');
+	
+	var cityicons_container = L.layerGroup([cmarker1, cmarker2, cmarker3]);
+	
+	var krkacircle = L.circle([43.80498741109021, 15.96288800577575], {
+    color: 'yellow',
+    fillColor: '#FFD966',
+    fillOpacity: 0.5,
+    radius: 10000
+	}).bindPopup('Krka Nemzeti Park')
+	
+	var krka_container = L.layerGroup([krkacircle]);
+
+	var latlngs = [
+    [47.48573100215573, 19.07037228517482],
+    [47.18321386904503, 18.43252668986881],
+    [46.90831013984546, 18.09531163405682],
+	[46.46104768522532, 17.02365950796251],
+    [46.24246385551064, 16.98002379148015],
+    [46.03953587568957, 16.60115988016455],
+	[45.79493946829874, 16.05819541539471],
+    [45.11644456619995, 15.27659310115692],
+    [44.0434720223665, 16.20025686611597],
+	[43.67769783839056, 16.09290862676344],
+    [43.54299105194576, 16.49929093516653],
+    [43.51435376778544, 16.47235447668756],
+	];
+
+	var polyline = L.polyline(latlngs, {color: 'red'}).bindPopup('Budapest-Split vasúti útvonal')
+	
+	var HouseIcon = L.Icon.extend({ 
+		options: { 
+			iconUrl: 'imgs/house.png',
+			iconSize: [20, 20], 
+			//shadowSize: [50, 64],
+			iconAnchor: [22, 20], 
+			//shadowAnchor: [4, 62], 
+			popupAnchor: [-3, -20] 
+		} 
+	});
+	var houseIcon = new HouseIcon();
+	housemarker = L.marker([43.51473160954486, 16.42407555245531], {icon: houseIcon}).bindTooltip("Szállás").openTooltip();;
+	
+	var house_container = L.layerGroup([housemarker]);
+	
+	fetch('./Diocletianus.kml')
+                .then(res => res.text())
+                .then(kmltext => {
+                    // Create new kml overlay
+                    const parser = new DOMParser();
+                    const kml = parser.parseFromString(kmltext, 'text/xml');
+                    const track = new L.KML(kml);
+                    map.addLayer(track);
+	});
+	
+	var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>';
+	var mbUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
+
+	var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { 
+		maxZoom: 19, attribution: '© OpenStreetMap'
+	 }); 
+	 
+	var satellite = L.tileLayer(mbUrl, {id: 'mapbox/satellite-v9', tileSize: 512, zoomOffset: -1, attribution: mbAttr});
+
+	var streets = L.tileLayer(mbUrl, {id: 'mapbox/streets-v11', tileSize: 512, zoomOffset: -1, attribution: mbAttr
+	}); 
+	
+	var south = 43.49276338177908,
+	east = 16.42159409948366,
+	north = 43.50145168528369,
+	west = 16.38684724352485;
+	var imageUrl = 'imgs/climate.png';
+	var errorOverlayUrl = 'https://cdn-icons-png.flaticon.com/512/110/110686.png';
+	var altText = 'Split Klímája';
+	var latLngBounds = L.latLngBounds([[north,east], [south, west]]);
+	L.rectangle(latLngBounds);
+	
+	var imageOverlay = L.imageOverlay(imageUrl, latLngBounds, {
+		opacity: 0.8, 
+		errorOverlayUrl: errorOverlayUrl, 
+		alt: altText, 
+		interactive: true 
+	}).bindPopup("Split Klímája");
+	
+	var map = L.map('map', { center: [43.51454166666667, 16.435925], zoom: 14, layers: [satellite, krka_container, beaches, cityicons_container, imageOverlay, house_container, polyline] 
+	});
+
+	var baseMaps = { "OpenStreetMap": osm, "Mapbox Streets": streets, "Satellite": satellite}; 
+	var overlayMaps = {"Városok": cityicons_container, "Strandok": beaches, "Szállás": house_container, "Split Klímája Átfedőréteg": imageOverlay, "Krka Nemzeti Park": krka_container, "Érkezési útvonal": polyline};
+	
+	var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
+	
+	function goToSplit(){
+		map.panTo(new L.LatLng(43.51454166666667, 16.435925));
+	}
+	function goToKrka(){
+		map.panTo(new L.LatLng(43.80498741109021, 15.96288800577575));
+	}
+	function goToKlis(){
+		map.panTo(new L.LatLng(43.55984667866608, 16.5222079647549));
+	}
+	function goToBacviceBeach(){
+		map.panTo(new L.LatLng(43.5023993373887, 16.44704747288873));
+	}
+	</script>
+  </div>
+  <!--
+  <div class="w3-row-padding">
+    <div class="w3-col l3 m6 w3-margin-bottom">
+      <div class="w3-display-container">
+        <div class="w3-display-topleft w3-black w3-padding">Summer House</div>
+        <img src="/w3images/house2.jpg" alt="House" style="width:99%">
+      </div>
+    </div>
+    <div class="w3-col l3 m6 w3-margin-bottom">
+      <div class="w3-display-container">
+        <div class="w3-display-topleft w3-black w3-padding">Brick House</div>
+        <img src="/w3images/house5.jpg" alt="House" style="width:99%">
+      </div>
+    </div>
+    <div class="w3-col l3 m6 w3-margin-bottom">
+      <div class="w3-display-container">
+        <div class="w3-display-topleft w3-black w3-padding">Renovated</div>
+        <img src="/w3images/house4.jpg" alt="House" style="width:99%">
+      </div>
+    </div>
+    <div class="w3-col l3 m6 w3-margin-bottom">
+      <div class="w3-display-container">
+        <div class="w3-display-topleft w3-black w3-padding">Barn House</div>
+        <img src="/w3images/house3.jpg" alt="House" style="width:99%">
+      </div>
+    </div>
+  </div>-->
+
+  <!-- doc Section -->
+  <div class="w3-container w3-padding-32" id="doc">
+    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Dokumentáció</h3>
+    <h4>Ötlet</h4>
+	<p>Az alapötlet onnan jött, hogy nyáron sikerült barátnőmmel Horvátországba utazni és megjelölöm azokat a helyeket, amelyeken jártunk.</p>
+	<h4>Megvalósítás</h4>
+	<p>Elsősorban az oldal felépítéséhez egy template-vel kezdtem, amely megtalálható a <a href="https://www.w3schools.com/w3css/w3css_templates.asp">https://www.w3schools.com/w3css/w3css_templates.asp</a> oldalon. 
+	Az <i>Architect Template</i> volt számomra a szimpatikus, így kiindulásnak ez mellett döntöttem.</p>
+	<p>A fotókat amelyeket felhasználók mindegyiket én készítettem, kivéve azokat ahol forrás is van megjelölve.</p>
+	<list>
+	<li>Miután elkészítettem a markert <i>Photoshopban</i> azután a <i>Google Earth</i> segítségével lehelyeztem azt Split városába. Ez a város volt az utazásunk központja,
+	itt volt a szállásunk és a legtöbb időt itt töltöttük el. A lehelyezett Marker-t elmentettem <i>kml</i>-be majd a koordinátáit kimásoltam és behelyeztem őket az oldalon is megtalálható 
+	leaflet kódba.</li>
+	<li>Az alaptérképeket az órai anyagból felhasználva <i>OpenStreetMap</i>, <i>Mapbox Streets</i> és <i>Satellite</i> szerint implementáltam.</li>
+	<li>Lehelyeztem a Krka vízesés markerét és a Klis markerét, majd elkészítettem egy ház marker ikont, amelyel jelöltem a szállásunkat. Ezt egy külön rétegbe helyeztem.</li>
+	<li>Split klímájának hozzáadása overlayként. Forrás: <a href="https://weatherspark.com/y/80692/Average-Weather-in-Split-Croatia-Year-Round">https://weatherspark.com/y/80692/Average-Weather-in-Split-Croatia-Year-Round</a></li>
+	<li>Krka Nemzeti Park megjelölése egy kör segítségével.</li>
+	<li>Strand Marker ikon elkészítése és hozzáadása a térképhez. Azokat a strandokat jelöltem, amelyeken jártunk és fürödtünk.</li>
+	<li>Egy polyline segítségével nagyjából megjelöltem Budapesttől az útvonalat, amelyen vonattal haladtunk.</li>
+	<li>Hozzáadtam 4 darab funkciót és 4 darab képet a weblap aljára. A képeknél a nevükre kattintva a térképhez ugrik az oldal és a térképünk pedig a megadott városra, vagy "városrészre" visz minket a <i>panTo</i> segítségével.</li>
+	<li>Leaflet-kml plugin hozzáadása. Forrás: <a href="https://github.com/windycom/leaflet-kml">https://github.com/windycom/leaflet-kml</a> <i>//ez local disk-en nem működik ezért fel kell tölteni egy olyan helyre, ahol legalább http van</i></li>
+	<li>CSS formázással átállítottam a markerek stílusát, valamint írtam hozzájuk egy picit több információt.</li>
+	</list>
+  </div>
+  
+  <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Fotók a helyekről</h3>
+  <div class="w3-row-padding">
+    <div class="w3-col l3 m6 w3-margin-bottom">
+      <div class="w3-display-container">
+        <a href="#terkep" onclick="javascript:goToSplit();"><div class="w3-display-topleft w3-black w3-padding w3-button">Split</div></a>
+        <img src="imgs/split.JPEG" alt="Split" style="width:100%">
+      </div>
+    </div>
+    <div class="w3-col l3 m6 w3-margin-bottom">
+      <div class="w3-display-container">
+        <a href="#terkep" onclick="javascript:goToKrka();"><div class="w3-display-topleft w3-black w3-padding w3-button">Krka</div></a>
+        <img src="imgs/krka.JPEG" alt="Krka" style="width:100%">
+      </div>
+    </div>
+    <div class="w3-col l3 m6 w3-margin-bottom">
+      <div class="w3-display-container">
+        <a href="#terkep" onclick="javascript:goToKlis();"><div class="w3-display-topleft w3-black w3-padding w3-button">Klis</div></a>
+        <img src="imgs/klis.JPEG" alt="Klis" style="width:100%">
+      </div>
+    </div>
+    <div class="w3-col l3 m6 w3-margin-bottom">
+      <div class="w3-display-container">
+        <a href="#terkep" onclick="javascript:goToBacviceBeach();"><div class="w3-display-topleft w3-black w3-padding w3-button">Homokvár</div></a>
+        <img src="imgs/homokvar.JPEG" alt="Homokvár" style="width:100%">
+      </div>
+    </div
+  </div>
+
+ <!-- <div class="w3-row-padding w3-grayscale">
+    <div class="w3-col l3 m6 w3-margin-bottom">
+      <img src="/w3images/team2.jpg" alt="John" style="width:100%">
+      <h3>John Doe</h3>
+      <p class="w3-opacity">CEO & Founder</p>
+      <p>Phasellus eget enim eu lectus faucibus vestibulum. Suspendisse sodales pellentesque elementum.</p>
+      <p><button class="w3-button w3-light-grey w3-block">Contact</button></p>
+    </div>
+    <div class="w3-col l3 m6 w3-margin-bottom">
+      <img src="/w3images/team1.jpg" alt="Jane" style="width:100%">
+      <h3>Jane Doe</h3>
+      <p class="w3-opacity">Architect</p>
+      <p>Phasellus eget enim eu lectus faucibus vestibulum. Suspendisse sodales pellentesque elementum.</p>
+      <p><button class="w3-button w3-light-grey w3-block">Contact</button></p>
+    </div>
+    <div class="w3-col l3 m6 w3-margin-bottom">
+      <img src="/w3images/team3.jpg" alt="Mike" style="width:100%">
+      <h3>Mike Ross</h3>
+      <p class="w3-opacity">Architect</p>
+      <p>Phasellus eget enim eu lectus faucibus vestibulum. Suspendisse sodales pellentesque elementum.</p>
+      <p><button class="w3-button w3-light-grey w3-block">Contact</button></p>
+    </div>
+    <div class="w3-col l3 m6 w3-margin-bottom">
+      <img src="/w3images/team4.jpg" alt="Dan" style="width:100%">
+      <h3>Dan Star</h3>
+      <p class="w3-opacity">Architect</p>
+      <p>Phasellus eget enim eu lectus faucibus vestibulum. Suspendisse sodales pellentesque elementum.</p>
+      <p><button class="w3-button w3-light-grey w3-block">Contact</button></p>
+    </div>
+  </div>-->
+  
+<!-- Image of location/map -->
+<!-- <div class="w3-container">
+  <img src="/w3images/map.jpg" class="w3-image" style="width:100%">
+</div> -->
+
+<!-- End page content -->
+</div>
+
+
+<!-- Footer -->
+<footer class="w3-center w3-black w3-padding-16">
+  <p>Készítette: Ignéczi Tibor | UM72V9 | Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">w3.css</a></p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>Diocletianus.kml</name>
+	<StyleMap id="msn_palace">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_palace</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_palace</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="sh_palace">
+		<IconStyle>
+			<scale>1.3</scale>
+			<Icon>
+				<href>imgs/palace.png</href>
+			</Icon>
+		</IconStyle>
+		<LabelStyle>
+			<color>ff00aaaa</color>
+		</LabelStyle>
+		<BalloonStyle>
+		</BalloonStyle>
+		<ListStyle>
+		</ListStyle>
+	</Style>
+	<Style id="sn_palace">
+		<IconStyle>
+			<scale>1.1</scale>
+			<Icon>
+				<href>imgs/palace.png</href>
+			</Icon>
+		</IconStyle>
+		<LabelStyle>
+			<color>ff00aaaa</color>
+		</LabelStyle>
+		<BalloonStyle>
+		</BalloonStyle>
+		<ListStyle>
+		</ListStyle>
+	</Style>
+	<Placemark>
+		<name>Diocletianus palotája</name>
+		<description><![CDATA[<b>Diocletianus palotája</b><br/>
+<img width="250px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Peristyle_of_Diocletian%27s_Palace%2C_Split_%2811908116224%29.jpg/375px-Peristyle_of_Diocletian%27s_Palace%2C_Split_%2811908116224%29.jpg"><br/>
+Ország: Horvátország<br/>
+Világörökség-azonosító: 97-001<br/>
+Típus: Kulturális helyszín<br/>
+<a href="https://hu.wikipedia.org/wiki/Diocletianus_palot%C3%A1ja">Wikipédia</a>]]></description>
+		<Camera>
+			<longitude>16.44394940845334</longitude>
+			<latitude>43.51512866785185</latitude>
+			<altitude>4626.599490963135</altitude>
+			<heading>8.861455071900791</heading>
+			<tilt>0.03776817710010583</tilt>
+			<roll>4.201894503420414</roll>
+			<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+		</Camera>
+		<styleUrl>#msn_palace</styleUrl>
+		<Point>
+			<gx:drawOrder>1</gx:drawOrder>
+			<coordinates>16.43974069221846,43.50841645676119,0</coordinates>
+		</Point>
+	</Placemark>
+</Document>
+</kml>
